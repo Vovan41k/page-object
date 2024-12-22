@@ -20,9 +20,8 @@ import time
 
 def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
     link = "https://selenium1py.pythonanywhere.com/"
-    page = BasePage(browser, link)
-    page.open()
-    basket_page = BasketPage(browser, browser.current_url, timeout=0)
+    basket_page = BasketPage(browser, link, timeout=0)
+    basket_page.open()
     basket_page.go_to_basket_page()
     basket_page.should_not_be_basket_items()
     basket_page.should_be_text_basket_empty()
