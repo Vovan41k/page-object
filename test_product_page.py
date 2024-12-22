@@ -5,13 +5,10 @@ from pages.login_page import LoginPage
 import pytest
 import time
 
-default = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer'
-links = [f"{default}{num}" for num in range(10)]
-links[7] = pytest.param(links[7], marks=pytest.mark.xfail)
-
 @pytest.mark.need_review
-@pytest.mark.parametrize('link', links)
-def test_guest_can_add_product_to_basket(browser, link):
+@pytest.mark.parametrize('promo',[*range(7), (pytest.param('7', marks=pytest.mark.xfail)), *range(8,10)])
+def test_guest_can_add_product_to_basket(browser, promo):
+    link = f'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer{promo}'
     product_page = ProductPage(browser, link)
     product_page.open()
     product_page.add_product_to_basket()
